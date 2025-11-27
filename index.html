@@ -1,0 +1,440 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jaymark Marticion Portfolio</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: Arial, sans-serif;
+        scroll-behavior: smooth;
+        background: url('background.png') no-repeat center center fixed;
+        background-size: cover;
+        color: white;
+        
+      }
+      section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s ease;
+  }
+
+  section.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
+      nav {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px 20px;
+        position: fixed;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1000;
+      }
+
+      nav a {
+        margin-left: 20px;
+        color: #ff7b00;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      section {
+        min-height: 100vh;
+        padding: 120px 50px 50px;
+        background: rgba(0, 0, 0, 0.55);
+      }
+
+      h1, h2 { margin-bottom: 20px; color: #ff7b00; }
+
+      .login-container {
+        width: 350px;
+        margin: 120px auto;
+        padding: 25px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        display: block;
+      }
+      .register-container {
+        width: 350px;
+        margin: 120px auto;
+        padding: 25px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        display: none;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #ff7b00;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #content { display: none; }
+
+      html {
+      scroll-behavior: smooth; 
+      }
+      /* Project thumbnails stacked vertically */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.project-item {
+  width: 320px;
+  height: 380px;
+  border: 3px solid #ff7b00;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ff7b00;
+  cursor: pointer;
+}
+
+.project-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* FULLSCREEN VIEWER */
+.fullscreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.fullscreen img {
+  max-width: 95vw;
+  max-height: 95vh;
+  border: 3px solid #ff7b00;
+  border-radius: 12px;
+}
+
+/* Close button */
+.close-btn {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  font-size: 45px;
+  color: #ff7b00;
+  cursor: pointer;
+  font-weight: bold;
+}
+/* Side-by-side layout */
+.projects-row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.projects-row img {
+  width: 300px;
+  height: 380px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #ff7b00;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.projects-row img:hover {
+  transform: scale(1.05);
+}
+
+/* Fullscreen popup */
+.fullscreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.fullscreen img {
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 50px;
+  color: white;
+  cursor: pointer;
+}
+
+    </style>
+  </head>
+  
+  <body>
+    <nav>
+      <div style="display:flex; align-items:left; gap:10px;width:10px; height:45px;padding-left:10px;">
+        <img src="Jaymark Marticion.png" alt="Jaymark's Logo"></div>
+      <div style="display:flex; align-items:center;">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>  
+      </div>
+    </nav>
+
+    <div class="login-container" id="loginBox">
+      <h2>Login</h2>
+      <input type="text" id="loginUser" placeholder="Username" />
+      <input type="password" id="loginPass" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p style="margin-top:10px; text-align:center;">No account? <a href="#" onclick="showRegister()" style="color:#ff7b00;">Register</a></p>
+    </div>
+
+    <div class="register-container" id="registerBox">
+      <h2>Register</h2>
+      <input type="text" id="regUser" placeholder="New Username" />
+      <input type="password" id="regPass" placeholder="New Password" />
+      <button onclick="register()">Create Account</button>
+      <p style="margin-top:10px; text-align:center;">Already have an account? <a href="#" onclick="showLogin()" style="color:#ff7b00;">Login</a></p>
+    </div>
+
+    <div id="content">
+
+      <section id="home" style="min-height:100vh; padding-top:100px; text-align:center; background:rgba(0,0,0,0.55);">
+    <img src="Profile Picture - Jaymark.png" alt="My Profile Picture" style="width:200px; height:200px; border-radius:100px; border:4px solid #ff7b00;" />
+        <h1 style="font-size:55px; color:#ff7b00; font-weight:bold;">
+      Hello, I am Jaymark!
+    </h1>
+
+    <h3 style="margin-top:20px; font-size:22px;">
+      Turning leads into loyal customers through strategic, automated funnels
+    </h3>
+
+    <p style="margin-top:15px; font-size:20px; color:#ff7b00;">
+      Funnel Builder & Designer
+    </p>
+
+    <a href="#about" style="
+        display:inline-block;
+        margin-top:40px;
+        padding:12px 25px;
+        background:#ff7b00;
+        color:black;
+        font-weight:bold;
+        border-radius:8px;
+        text-decoration:none;
+        font-size:18px;">
+      Learn More
+    </a>
+  </section>
+
+      <section id="about" style="display:flex; align-items:center; gap:40px; padding-top:80px;padding-right:180px;padding-left:100px;">
+        <img src="myphoto.png" alt="My Photo" style="width:280px; height:280px; object-fit:cover; border-radius:15px; border:3px solid #ff7b00;" />
+        <div>
+          <h1>About Me</h1>
+          <p>I’m Jaymark Marticion, a Virtual Assistant focusing on funnel building & design. I help entrepreneurs create strategic, conversion-focused funnels that elevate their online presence and automate their customer journey.</p>
+
+          <div style="display:flex; gap:60px; margin-top:30px; width:100%;">
+            <div style="width:50%;">
+              <h2 style="margin-bottom:10px; color:#ff7b00;">💼 Skills</h2>
+              <ul style="margin-left:20px; line-height:1.8;">
+                <li>Funnel Building & Funnel Design</li>
+                <li>Landing Page Creation</li>
+                <li>Sales Funnel Strategy & Mapping</li>
+                <li>Lead Generation Funnel Setup</li>
+              </ul>
+            </div>
+
+            <div style="width:50%;">
+              <h2 style="margin-bottom:10px; color:#ff7b00;">🎨 Hobbies</h2>
+              <ul style="margin-left:20px; line-height:1.8;">
+                <li>Designing digital layouts and visuals</li>
+                <li>Learning new tools and tech trends</li>
+                <li>Watching tutorials and improving skills</li>
+                <li>Exploring productivity methods</li>
+              </ul>
+            </div>
+      </section>
+
+  <section id="projects">
+  <h2>My Projects</h2>
+  <p>Here are some of my sample works:</p>
+
+  <div class="projects-row">
+    <img src="Untitled design (7).png" onclick="openImage(this.src)" alt="Work 1">
+    <img src="screencapture-systeme-io-dashboard-page-template-26050-show-2025-11-25-10_59_23.png" onclick="openImage(this.src)" alt="Work 2">
+    <img src="screencapture-systeme-io-dashboard-page-template-26026-show-2025-11-25-11_00_11.png" onclick="openImage(this.src)" alt="Work 3">
+  </div>
+</section>
+
+
+
+
+      <section id="contact" style="
+      min-height: 100vh;
+      padding-top: 100px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.55);
+  ">
+
+  
+    <h2 style="font-size:40px; color:#ff7b00; margin-bottom:20px;">
+      Contact Me
+    </h2>
+
+  
+    <p style="
+        font-size:20px;
+        max-width:1000px;
+        margin:auto;
+        line-height:1.6;
+    ">
+      If you have any questions, clarifications, or concerns, feel free to message me anytime.
+      I’m always happy to help and make sure you get the support you need.
+    </p>
+
+
+    <div style="
+        margin-top:50px;
+        display:flex;
+        flex-direction:column;
+        align-items:left;
+        gap:25px;
+        font-size:20px;
+    ">
+
+      <div style="display:flex; align-items:left; gap:12px;">
+        <span style="font-size:28px;">📧</span>
+        <span>vajaymarticion@gmail.com</span>
+      </div>
+
+      <div style="display:flex; align-items:left; gap:12px;">
+        <span style="font-size:28px;">📞</span>
+        <span>+639123174054</span>
+      </div>
+
+      <div style="display:flex; align-items:left; gap:12px;">
+        <span style="font-size:28px;">🔗</span>
+        <span>www.linkedin.com/in/jaymark-marticion-aba304382</span>
+      </div>
+  <div class="cv">
+        <a style="
+        display:inline-block;
+        margin-top:40px;
+        padding:12px 25px;
+        background:#ff7b00;
+        color:black;
+        font-weight:bold;
+        border-radius:8px;
+        text-decoration:none;
+        font-size:18px;"
+        href="Jaymark's Profession Resume (1).pdf" class="btn" download="Jaymark's Profession Resume (1).pdf">Download CV</a>
+  </div>
+    </div>
+
+    <script>
+      function showLogin() {
+        document.getElementById('loginBox').style.display = 'block';
+        document.getElementById('registerBox').style.display = 'none';
+        document.getElementById('content').style.display = 'none';
+      }
+
+      function showRegister() {
+        document.getElementById('registerBox').style.display = 'block';
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('content').style.display = 'none';
+      }
+
+      function login() {
+        let u = localStorage.getItem('vaUser');
+        let p = localStorage.getItem('vaPass');
+
+        if (document.getElementById('loginUser').value === u && document.getElementById('loginPass').value === p) {
+          document.getElementById('content').style.display = 'block';
+          document.getElementById('loginBox').style.display = 'none';
+        } else {
+          alert('Incorrect username or password');
+        }
+      }
+
+      function register() {
+        let newUser = document.getElementById('regUser').value;
+        let newPass = document.getElementById('regPass').value;
+
+        if (newUser && newPass) {
+          localStorage.setItem('vaUser', newUser);
+          localStorage.setItem('vaPass', newPass);
+          alert('Account created. You can now log in.');
+          showLogin();
+        } else {
+          alert('Please fill all fields');
+        }
+      }
+      const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  });
+
+  document.querySelectorAll('section').forEach(sec => {
+    observer.observe(sec);
+  });
+function openImage(src) {
+  document.getElementById("fullImage").src = src;
+  document.getElementById("fullscreenView").style.display = "flex";
+}
+
+function closeImage() {
+  document.getElementById("fullscreenView").style.display = "none";
+}
+function openImage(src) {
+  document.getElementById("fullImage").src = src;
+  document.getElementById("fullscreenView").style.display = "flex";
+}
+
+function closeImage() {
+  document.getElementById("fullscreenView").style.display = "none";
+}
+
+    </script>
+  <div id="fullscreenView" class="fullscreen">
+  <span class="close-btn" onclick="closeImage()">×</span>
+  <img id="fullImage">
+</div>
+
+  </body>
+
+  </html>
